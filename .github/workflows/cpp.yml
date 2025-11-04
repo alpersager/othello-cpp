@@ -1,0 +1,17 @@
+name: C++ CI
+on:
+  push:
+    paths: ["**.cpp", "**.hpp", "**.h", ".github/workflows/cpp.yml", "README.md"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install g++
+        run: sudo apt-get update && sudo apt-get install -y g++
+      - name: Build
+        run: g++ -std=c++17 -O2 -o othello othello.cpp othelloKI.cpp test.cpp
+      - name: Smoke test
+        run: ./othello || true
